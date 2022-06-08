@@ -24,6 +24,7 @@ le caractère nul, '\0' (code ASCII 0x00)
 
 #include <stdio.h>
 #include <stdint.h>
+#include <stddef.h>
 
 /* affiche une chaine sur la console, passe la dernière valeur de retour de putchar */
 int puts(const char* cs);
@@ -44,13 +45,13 @@ size_t strlen(const char* cs)
 	effectue une copie profonde de la chaîne cs dans le tableau de char désigné par s
 	retourne s (permet une utilisation plus flexible que void)
 */
-char* strcpy(char* s, const char* ct)
+char* strcpy(char* dst, const char* src)
 {
     int i = 0;
     do {
-        s[i] = ct[i];
-    } while (ct[i++] != '\0');
-    return s;
+        dst[i] = src[i];
+    } while (src[i++] != '\0');
+    return dst;
 }
 
 
@@ -73,6 +74,11 @@ char* strreverse(char *s)
    s est un tampon existant pouvant recevoir la chaîne (il faut au max 13 cases) */
 char* longtodec(unsigned int l, char* s)
 {
+    if(l == 0){
+        s[0] = '0';
+        s[1] = '\0';
+        return s;
+    }
     unsigned char i = 0;
     while(l > 0) {
         s[i++] = l % 10 + '0';
